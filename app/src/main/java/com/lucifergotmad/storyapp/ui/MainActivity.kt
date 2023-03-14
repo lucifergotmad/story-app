@@ -1,7 +1,8 @@
-package com.lucifergotmad.storyapp
+package com.lucifergotmad.storyapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.lucifergotmad.storyapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
