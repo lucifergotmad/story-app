@@ -8,6 +8,7 @@ class StoryRepository(
     private val mUserService: UserService
 ) {
 
+
     companion object {
         @Volatile
         private var instance: StoryRepository? = null

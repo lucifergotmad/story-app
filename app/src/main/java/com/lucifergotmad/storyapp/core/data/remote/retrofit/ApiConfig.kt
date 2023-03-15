@@ -10,7 +10,7 @@ class ApiConfig {
     companion object {
         private const val BASE_URL = "https://story-api.dicoding.dev/v1"
 
-        fun getStoryService(token: String): StoryService {
+        fun getStoryService(token: String?): StoryService {
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
