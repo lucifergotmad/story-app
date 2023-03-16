@@ -1,6 +1,5 @@
 package com.lucifergotmad.storyapp.core.helper
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,6 @@ import com.lucifergotmad.storyapp.core.preferences.UserPreferences
 import com.lucifergotmad.storyapp.ui.home.HomeViewModel
 import com.lucifergotmad.storyapp.ui.login.LoginViewModel
 
-@Suppress("UNCHECKED_CAST")
 class ViewModelFactory private constructor(
     private val storyRepository: StoryRepository,
     private val userPreferences: UserPreferences
@@ -19,7 +17,7 @@ class ViewModelFactory private constructor(
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(storyRepository) as T
+            return HomeViewModel(storyRepository, userPreferences) as T
         } else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(userPreferences) as T
         }
@@ -32,11 +30,10 @@ class ViewModelFactory private constructor(
 
         fun getInstance(
             dataStore: DataStore<Preferences>,
-            token: String?
         ): ViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(
-                    Injection.provideRepository(token),
+                    Injection.provideRepository(),
                     Injection.providePreferences(dataStore),
                 )
             }.also { instance = it }

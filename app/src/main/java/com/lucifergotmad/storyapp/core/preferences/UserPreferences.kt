@@ -22,9 +22,9 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
-    fun getUserToken(): Flow<String?> {
+    fun getUserToken(): Flow<String> {
         return dataStore.data.map { preferences ->
-            preferences[userToken]
+            preferences[userToken] ?: ""
         }
     }
 

@@ -7,8 +7,8 @@ import com.lucifergotmad.storyapp.core.data.remote.retrofit.ApiConfig
 import com.lucifergotmad.storyapp.core.preferences.UserPreferences
 
 object Injection {
-    fun provideRepository(token: String?): StoryRepository {
-        val storyService = ApiConfig.getStoryService(token)
+    fun provideRepository(): StoryRepository {
+        val storyService = ApiConfig.getStoryService()
         val userService = ApiConfig.getUserService()
         return StoryRepository.getInstance(storyService, userService)
     }
