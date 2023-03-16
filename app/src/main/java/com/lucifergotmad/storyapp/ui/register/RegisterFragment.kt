@@ -3,6 +3,7 @@ package com.lucifergotmad.storyapp.ui.register
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -61,35 +62,52 @@ class RegisterFragment : Fragment() {
         }
 
         binding.btnRegister.setOnClickListener {
-            val user = RegisterUserRequest(
-                binding.edtName.text.toString(),
-                binding.edtEmail.text.toString(),
-                binding.edtPassword.text.toString()
-            )
+            binding.apply {
+                if (edtName.text?.isNotEmpty() == true && edtEmail.text?.isNotEmpty() == true && edtPassword.text?.isNotEmpty() == true) {
+                    val user = RegisterUserRequest(
+                        binding.edtName.text.toString(),
+                        binding.edtEmail.text.toString(),
+                        binding.edtPassword.text.toString()
+                    )
 
-            viewModel.register(user).observe(viewLifecycleOwner) { result ->
-                if (result != null) {
-                    when (result) {
-                        is com.lucifergotmad.storyapp.core.data.Result.Loading -> {
-                            binding.btnRegister.isEnabled = false
+                    viewModel.register(user).observe(viewLifecycleOwner) { result ->
+                        if (result != null) {
+                            when (result) {
+                                is com.lucifergotmad.storyapp.core.data.Result.Loading -> {
+                                    it.isEnabled = false
+                                }
+                                is com.lucifergotmad.storyapp.core.data.Result.Success -> {
+                                    it.isEnabled = true
+                                    Toast.makeText(
+                                        context,
+                                        "Yeay! ${result.data.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                                }
+                                is com.lucifergotmad.storyapp.core.data.Result.Error -> {
+                                    it.isEnabled = true
+                                    Toast.makeText(
+                                        context,
+                                        "Somethings wrong! " + result.error,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
                         }
-                        is com.lucifergotmad.storyapp.core.data.Result.Success -> {
-                            binding.btnRegister.isEnabled = true
-                            Toast.makeText(
-                                context,
-                                "Yeay! ${result.data.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-                        }
-                        is com.lucifergotmad.storyapp.core.data.Result.Error -> {
-                            binding.btnRegister.isEnabled = true
-                            Toast.makeText(
-                                context,
-                                "Somethings wrong! " + result.error,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    }
+                } else {
+                    if (edtName.text?.isEmpty() == true) {
+                        edtName.error = "Name is required"
+                    }
+
+                    if (edtEmail.text?.isEmpty() == true) {
+                        edtEmail.error = "Email is required"
+                    }
+
+                    if (edtPassword.text?.isEmpty() == true) {
+                        edtPassword.error = "Password is Required"
+                        edtPassword.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                     }
                 }
             }
