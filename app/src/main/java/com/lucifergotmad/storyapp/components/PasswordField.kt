@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
+import com.lucifergotmad.storyapp.R
 
 class PasswordField : AppCompatEditText {
     constructor(context: Context) : super(context) {
@@ -26,6 +27,8 @@ class PasswordField : AppCompatEditText {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+
+        hint = resources.getString(R.string.edt_password_hint)
     }
 
     private fun init() {
