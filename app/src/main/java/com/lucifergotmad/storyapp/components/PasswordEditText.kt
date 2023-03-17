@@ -5,10 +5,10 @@ import android.graphics.Canvas
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import com.google.android.material.textfield.TextInputEditText
+import androidx.appcompat.widget.AppCompatEditText
 import com.lucifergotmad.storyapp.R
 
-class PasswordEditText : TextInputEditText {
+class PasswordEditText : AppCompatEditText {
     constructor(context: Context) : super(context) {
         init()
     }

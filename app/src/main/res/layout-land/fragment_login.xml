@@ -95,7 +95,7 @@
         app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/ic_lock">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.lucifergotmad.storyapp.components.PasswordEditText
             android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

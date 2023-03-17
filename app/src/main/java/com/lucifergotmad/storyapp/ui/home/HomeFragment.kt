@@ -10,7 +10,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.lucifergotmad.storyapp.R
 import com.lucifergotmad.storyapp.core.helper.ViewModelFactory
@@ -42,8 +41,8 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity(), factory)[HomeViewModel::class.java]
 
         viewModel.getUser().observe(viewLifecycleOwner) { result ->
-            if (result.isNotEmpty()) {
-                accessToken = result
+            if (result.token.isNotEmpty()) {
+                accessToken = result.token
             } else {
                 findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
             }

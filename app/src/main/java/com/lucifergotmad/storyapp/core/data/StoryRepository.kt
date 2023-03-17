@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.lucifergotmad.storyapp.core.data.remote.request.LoginUserRequest
 import com.lucifergotmad.storyapp.core.data.remote.request.RegisterUserRequest
+import com.lucifergotmad.storyapp.core.data.remote.response.PostLoginResponse
 import com.lucifergotmad.storyapp.core.data.remote.response.PostResponse
 import com.lucifergotmad.storyapp.core.data.remote.retrofit.StoryService
 import com.lucifergotmad.storyapp.core.data.remote.retrofit.UserService
@@ -29,7 +30,7 @@ class StoryRepository(
         }
     }
 
-    fun loginUser(data: LoginUserRequest): LiveData<Result<PostResponse>> = liveData {
+    fun loginUser(data: LoginUserRequest): LiveData<Result<PostLoginResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = mUserService.login(data)

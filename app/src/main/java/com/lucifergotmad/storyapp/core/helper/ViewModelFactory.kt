@@ -20,7 +20,7 @@ class ViewModelFactory private constructor(
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(storyRepository, userPreferences) as T
         } else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(userPreferences) as T
+            return LoginViewModel(storyRepository, userPreferences) as T
         } else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
             return RegisterViewModel(storyRepository) as T
         }

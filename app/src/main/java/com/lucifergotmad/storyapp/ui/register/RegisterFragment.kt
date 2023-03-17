@@ -65,9 +65,9 @@ class RegisterFragment : Fragment() {
             binding.apply {
                 if (edtName.text?.isNotEmpty() == true && edtEmail.text?.isNotEmpty() == true && edtPassword.text?.isNotEmpty() == true) {
                     val user = RegisterUserRequest(
-                        binding.edtName.text.toString(),
-                        binding.edtEmail.text.toString(),
-                        binding.edtPassword.text.toString()
+                        edtName.text.toString(),
+                        edtEmail.text.toString(),
+                        edtPassword.text.toString()
                     )
 
                     viewModel.register(user).observe(viewLifecycleOwner) { result ->
