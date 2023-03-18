@@ -28,4 +28,7 @@
     <string name="btn_login">Login</string>
     <string name="edt_password_hint">Enter your Password</string>
     <string name="iv_login_description">People Discussing</string>
+    <string name="item_story_image">Item Story Image</string>
+    <string name="tv_title_tools">Title of the Story</string>
+    <string name="tv_description_tools">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper pretium est, et porta erat faucibus ac. Curabitur turpis ligula, ultricies eu sagittis eget, sagittis vitae nisl. In interdum, dolor in maximus porttitor, elit enim mollis nulla, a mollis dui metus ut tellus. In semper vehicula hendrerit. Integer mattis mattis risus, ac rutrum dui aliquam quis. Vivamus ante est, accumsan vitae eros non, imperdiet maximus metus. Cras pharetra erat turpis, in mattis nisi vehicula a. Mauris dapibus elit vitae risus suscipit, sit amet pretium sapien dignissim. Cras finibus ullamcorper dui. Suspendisse libero lorem, rhoncus consequat massa quis, vehicula molestie justo. Proin hendrerit a sem id pharetra.</string>
 </resources>

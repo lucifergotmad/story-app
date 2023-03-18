@@ -3,6 +3,7 @@ package com.lucifergotmad.storyapp.ui.login
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.lucifergotmad.storyapp.core.data.remote.request.LoginUserRequest
 import com.lucifergotmad.storyapp.core.domain.User
 import com.lucifergotmad.storyapp.core.helper.ViewModelFactory
 import com.lucifergotmad.storyapp.databinding.FragmentLoginBinding
+import kotlinx.coroutines.*
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -78,19 +80,26 @@ class LoginFragment : Fragment() {
                                 }
                                 is com.lucifergotmad.storyapp.core.data.Result.Success -> {
                                     it.isEnabled = true
-                                    Toast.makeText(
-                                        context,
-                                        "Yeay! ${result.data.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    val response = result.data.loginResult
-                                    val dataUser = User(
-                                        response?.userId ?: "",
-                                        response?.name ?: "",
-                                        response?.token ?: "",
-                                    )
-                                    viewModel.saveUser(dataUser)
-                                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        val response = result.data.loginResult
+                                        val dataUser = User(
+                                            response?.userId ?: "",
+                                            response?.name ?: "",
+                                            response?.token ?: "",
+                                        )
+                                        Log.d("LoginFragment", "user: $dataUser")
+                                        viewModel.saveUser(dataUser).join()
+
+                                        withContext(Dispatchers.Main) {
+//                                            Toast.makeText(
+//                                                context,
+//                                                "Yeay! ${result.data.message}",
+//                                                Toast.LENGTH_SHORT
+//                                            ).show()
+                                            Log.d("LoginFragment", "user: ${dataUser.token}")
+                                            moveToHomePage(dataUser.token)
+                                        }
+                                    }
                                 }
                                 is com.lucifergotmad.storyapp.core.data.Result.Error -> {
                                     it.isEnabled = true
@@ -120,5 +129,10 @@ class LoginFragment : Fragment() {
     private fun setupViewModel() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext().dataStore)
         viewModel = ViewModelProvider(requireActivity(), factory)[LoginViewModel::class.java]
+    }
+
+    private fun moveToHomePage(token: String) {
+        val toHomePage = LoginFragmentDirections.actionLoginFragmentToHomeFragment(token)
+        findNavController().navigate(toHomePage)
     }
 }
