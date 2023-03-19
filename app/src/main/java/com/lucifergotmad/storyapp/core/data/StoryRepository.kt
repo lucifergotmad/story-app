@@ -56,9 +56,10 @@ class StoryRepository(
                 emit(Result.Error(response.message ?: ""))
             }
 
-            val listStories = response.listStory?.map {
-                Story(it?.id, it?.name, it?.description, it?.photoUrl)
+            val listStories = response.listStory.map {
+                Story(it.id, it.name, it.description, it.photoUrl)
             }
+
             emit(Result.Success(listStories))
         } catch (e: Exception) {
             Log.d(TAG, "getStories: ${e.message.toString()} ")

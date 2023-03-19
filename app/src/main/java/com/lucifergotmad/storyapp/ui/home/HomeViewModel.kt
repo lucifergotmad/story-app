@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.lucifergotmad.storyapp.core.data.StoryRepository
+import com.lucifergotmad.storyapp.core.domain.Story
 import com.lucifergotmad.storyapp.core.domain.User
 import com.lucifergotmad.storyapp.core.preferences.UserPreferences
 
@@ -14,4 +15,6 @@ class HomeViewModel(
     fun getUser(): LiveData<User> {
         return userPreferences.getUser().asLiveData()
     }
+
+    fun getStories(token: String) = storyRepository.getStories(token)
 }
