@@ -104,6 +104,8 @@ class HomeFragment : Fragment() {
         bundle.putString("token", "")
         accessToken =
             HomeFragmentArgs.fromBundle(requireActivity().intent.extras ?: bundle).token.toString()
+
+        listStoryAdapter = ListStoryAdapter()
     }
 
 }

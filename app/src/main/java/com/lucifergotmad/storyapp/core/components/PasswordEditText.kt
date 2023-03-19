@@ -1,4 +1,4 @@
-package com.lucifergotmad.storyapp.components
+package com.lucifergotmad.storyapp.core.components
 
 import android.content.Context
 import android.graphics.Canvas
@@ -40,7 +40,7 @@ class PasswordEditText : AppCompatEditText {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.isEmpty() || s.length < 8) {
                     error = "Password length must be more than 8 characters"
-                    setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                    setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                 } else {
                     error = null
                 }

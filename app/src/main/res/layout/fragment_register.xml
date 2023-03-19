@@ -130,10 +130,11 @@
         app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/ic_lock">
 
-        <com.lucifergotmad.storyapp.components.PasswordEditText
+        <com.lucifergotmad.storyapp.core.components.PasswordEditText
             android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/edt_password_hint"
             android:inputType="textPassword"
             app:passwordToggleEnabled="true" />
     </com.google.android.material.textfield.TextInputLayout>
