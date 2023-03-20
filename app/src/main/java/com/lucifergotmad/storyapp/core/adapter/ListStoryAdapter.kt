@@ -47,7 +47,7 @@ class ListStoryAdapter : ListAdapter<Story, ListStoryAdapter.ListViewHolder>(DIF
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(username: String)
+        fun onItemClicked(id: String)
     }
 
     companion object {

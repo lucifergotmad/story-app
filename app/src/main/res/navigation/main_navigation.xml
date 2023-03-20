@@ -46,7 +46,11 @@
         android:id="@+id/detailStoryFragment"
         android:name="com.lucifergotmad.storyapp.ui.detail.DetailStoryFragment"
         android:label="fragment_detail_story"
-        tools:layout="@layout/fragment_detail_story" />
+        tools:layout="@layout/fragment_detail_story" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/addStoryFragment"
         android:name="com.lucifergotmad.storyapp.ui.add.AddStoryFragment"

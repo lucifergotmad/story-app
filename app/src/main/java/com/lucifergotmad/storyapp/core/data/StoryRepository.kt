@@ -10,24 +10,22 @@ import com.lucifergotmad.storyapp.core.data.remote.response.PostResponse
 import com.lucifergotmad.storyapp.core.data.remote.response.StoryResponse
 import com.lucifergotmad.storyapp.core.data.remote.retrofit.StoryService
 import com.lucifergotmad.storyapp.core.data.remote.retrofit.UserService
+import com.lucifergotmad.storyapp.core.domain.DetailStory
 import com.lucifergotmad.storyapp.core.domain.Story
 
 class StoryRepository(
-    private val mStoryService: StoryService,
-    private val mUserService: UserService
+    private val mStoryService: StoryService, private val mUserService: UserService
 ) {
 
     fun registerUser(data: RegisterUserRequest): LiveData<Result<PostResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = mUserService.register(data)
-            Log.d(TAG, "response: $response")
             if (response.error) {
                 emit(Result.Error(response.message))
             }
             emit(Result.Success(response))
         } catch (e: Exception) {
-            Log.d(TAG, "registerUser: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -36,13 +34,11 @@ class StoryRepository(
         emit(Result.Loading)
         try {
             val response = mUserService.login(data)
-            Log.d(TAG, "response: $response} ")
             if (response.error) {
                 emit(Result.Error(response.message))
             }
             emit(Result.Success(response))
         } catch (e: Exception) {
-            Log.d(TAG, "loginUser: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -52,18 +48,33 @@ class StoryRepository(
         try {
             val response = mStoryService.getALlStories(token)
             if (response.error == true) {
-                Log.d(TAG, "getStories: ${response.message} ")
                 emit(Result.Error(response.message ?: ""))
             }
 
             val listStories = response.listStory.map {
                 Story(it.id, it.name, it.description, it.photoUrl)
             }
-            Log.d(TAG, "listStories: $listStories")
 
             emit(Result.Success(listStories))
         } catch (e: Exception) {
-            Log.d(TAG, "getStories: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun getStoryDetail(id: String, token: String): LiveData<Result<DetailStory>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = mStoryService.getDetailStory(id, token)
+            if (response.error) {
+                emit(Result.Error(response.message))
+            }
+
+            val detailStory = response.story.let {
+                DetailStory(it.id, it.name, it.description, it.photoUrl, it.createdAt)
+            }
+
+            emit(Result.Success(detailStory))
+        } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -75,11 +86,9 @@ class StoryRepository(
 
         private const val TAG = "StoryRepository"
         fun getInstance(
-            storyService: StoryService,
-            userService: UserService
-        ): StoryRepository =
-            instance ?: synchronized(this) {
-                instance ?: StoryRepository(storyService, userService)
-            }.also { instance = it }
+            storyService: StoryService, userService: UserService
+        ): StoryRepository = instance ?: synchronized(this) {
+            instance ?: StoryRepository(storyService, userService)
+        }.also { instance = it }
     }
 }

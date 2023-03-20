@@ -1,12 +1,10 @@
 package com.lucifergotmad.storyapp.core.components
 
 import android.content.Context
-import android.graphics.Canvas
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
-import com.lucifergotmad.storyapp.R
 
 class PasswordEditText : AppCompatEditText {
     constructor(context: Context) : super(context) {
@@ -23,12 +21,6 @@ class PasswordEditText : AppCompatEditText {
         defStyleAttr
     ) {
         init()
-    }
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
-        hint = resources.getString(R.string.edt_password_hint)
     }
 
     private fun init() {

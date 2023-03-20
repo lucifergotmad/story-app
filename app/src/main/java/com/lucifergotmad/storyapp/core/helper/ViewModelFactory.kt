@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.lucifergotmad.storyapp.core.data.StoryRepository
 import com.lucifergotmad.storyapp.core.di.Injection
 import com.lucifergotmad.storyapp.core.preferences.UserPreferences
+import com.lucifergotmad.storyapp.ui.detail.DetailStoryViewModel
 import com.lucifergotmad.storyapp.ui.home.HomeViewModel
 import com.lucifergotmad.storyapp.ui.login.LoginViewModel
 import com.lucifergotmad.storyapp.ui.register.RegisterViewModel
@@ -23,6 +24,8 @@ class ViewModelFactory private constructor(
             return LoginViewModel(storyRepository, userPreferences) as T
         } else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
             return RegisterViewModel(storyRepository) as T
+        } else if (modelClass.isAssignableFrom(DetailStoryViewModel::class.java)) {
+            return DetailStoryViewModel(storyRepository, userPreferences) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
