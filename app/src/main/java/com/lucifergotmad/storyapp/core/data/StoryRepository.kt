@@ -59,6 +59,7 @@ class StoryRepository(
             val listStories = response.listStory.map {
                 Story(it.id, it.name, it.description, it.photoUrl)
             }
+            Log.d(TAG, "listStories: $listStories")
 
             emit(Result.Success(listStories))
         } catch (e: Exception) {

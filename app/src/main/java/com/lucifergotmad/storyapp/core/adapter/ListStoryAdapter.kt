@@ -22,7 +22,7 @@ class ListStoryAdapter : ListAdapter<Story, ListStoryAdapter.ListViewHolder>(DIF
                 tvDescription.text = story.description
                 Glide.with(itemView.context)
                     .load(story.photoUrl)
-                    .into(ivItemImage)
+                    .into((ivItemImage))
             }
 
         }

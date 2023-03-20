@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var listStoryAdapter: ListStoryAdapter
-    private var accessToken: String = ""
+    var accessToken: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,11 +39,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupView()
-        setupViewModel()
         setupAdapter()
+        setupViewModel()
     }
 
     private fun setupAdapter() {
+        listStoryAdapter = ListStoryAdapter()
+
         binding.listStory.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
@@ -57,37 +59,22 @@ class HomeFragment : Fragment() {
 
         if (accessToken.isEmpty()) {
             viewModel.getUser().observe(viewLifecycleOwner) { result ->
+                Log.d("HomeFragment", "accessToken from viewModel: ${result.token}")
                 if (result.token.isNotEmpty()) {
                     accessToken = result.token
+                    Log.d("HomeFragment", "accessToken from viewModel2: ${result.token}")
+                    setupStories(result.token)
                 } else {
                     findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
                 }
             }
         }
 
-        if (accessToken.isNotEmpty()) {
-            viewModel.getStories(accessToken).observe(viewLifecycleOwner) { result ->
-                if (result != null) {
-                    when (result) {
-                        is com.lucifergotmad.storyapp.core.data.Result.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                        }
-                        is com.lucifergotmad.storyapp.core.data.Result.Success -> {
-                            binding.progressBar.visibility = View.GONE
-                            val listStories = result.data
-                            listStoryAdapter.submitList(listStories)
-                        }
-                        is com.lucifergotmad.storyapp.core.data.Result.Error -> {
-                            binding.progressBar.visibility = View.GONE
-                            Toast.makeText(
-                                context, "Somethings wrong! " + result.error, Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-            }
-        }
+
+
+
     }
+
 
     private fun setupView() {
         val window = (requireActivity() as AppCompatActivity).window
@@ -99,13 +86,31 @@ class HomeFragment : Fragment() {
             }
         }
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
-
-        val bundle = Bundle()
-        bundle.putString("token", "")
-        accessToken =
-            HomeFragmentArgs.fromBundle(requireActivity().intent.extras ?: bundle).token.toString()
-
-        listStoryAdapter = ListStoryAdapter()
     }
 
+    private fun setupStories(token: String) {
+        Log.d("HomeFragment", "accessToken: $token")
+        viewModel.getStories("Bearer $token").observe(viewLifecycleOwner) { result ->
+            if (result != null) {
+                when (result) {
+                    is com.lucifergotmad.storyapp.core.data.Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is com.lucifergotmad.storyapp.core.data.Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        val listStories = result.data
+                        Log.d("HomeFragment", "listStories: $listStories")
+                        listStoryAdapter.submitList(listStories)
+                    }
+                    is com.lucifergotmad.storyapp.core.data.Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        Log.d("HomeFragment", "error: ${result.error}")
+                        Toast.makeText(
+                            context, "Somethings wrong! " + result.error, Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
 }
