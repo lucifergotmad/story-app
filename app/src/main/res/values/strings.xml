@@ -10,6 +10,7 @@
     <string name="message_login_page">Masukkan dulu datamu ya</string>
     <string name="title_login_page">Sudah siap untuk upgrade skill?</string>
     <string name="name">Name</string>
+    <string name="description">Description</string>
     <string name="copyright">© 2021 Dicoding</string>
     <string name="message_main_page">Selamat Belajar di Dicoding.</string>
     <string name="greeting">Halo %1$s,</string>
@@ -24,6 +25,8 @@
     <string name="tv_subtitle_login_description">Enter your personal data first</string>
     <string name="edt_email_hint">Enter your Email</string>
     <string name="edt_name_hint">Enter your Name</string>
+    <string name="edt_description_hint">Enter Description</string>
+    <string name="upload">Upload</string>
     <string name="btn_register">Register</string>
     <string name="btn_login">Login</string>
     <string name="edt_password_hint">Enter your Password</string>
@@ -34,4 +37,7 @@
     <string name="tv_title_tools">Title of the Story</string>
     <string name="tv_description_tools">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper pretium est, et porta erat faucibus ac. Curabitur turpis ligula, ultricies eu sagittis eget, sagittis vitae nisl. In interdum, dolor in maximus porttitor, elit enim mollis nulla, a mollis dui metus ut tellus. In semper vehicula hendrerit. Integer mattis mattis risus, ac rutrum dui aliquam quis. Vivamus ante est, accumsan vitae eros non, imperdiet maximus metus. Cras pharetra erat turpis, in mattis nisi vehicula a. Mauris dapibus elit vitae risus suscipit, sit amet pretium sapien dignissim. Cras finibus ullamcorper dui. Suspendisse libero lorem, rhoncus consequat massa quis, vehicula molestie justo. Proin hendrerit a sem id pharetra.</string>
     <string name="go_to_add_story">Go to Add Story</string>
+    <string name="choose_from_gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="image_preview">Image Preview</string>
 </resources>
