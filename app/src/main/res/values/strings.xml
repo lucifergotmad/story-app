@@ -40,4 +40,6 @@
     <string name="choose_from_gallery">Gallery</string>
     <string name="camera">Camera</string>
     <string name="image_preview">Image Preview</string>
+    <string name="capture_image">Capture Image</string>
+    <string name="switch_camera">Switch Camera</string>
 </resources>
