@@ -82,6 +82,10 @@ class HomeFragment : Fragment() {
             }
         }
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
+
+        binding.floatingActionButton.setOnClickListener {
+            moveToAddPage()
+        }
     }
 
     private fun setupStories(token: String) {
@@ -112,5 +116,10 @@ class HomeFragment : Fragment() {
         val toDetailFragment =
             HomeFragmentDirections.actionHomeFragmentToDetailStoryFragment(id)
         findNavController().navigate(toDetailFragment)
+    }
+
+    private fun moveToAddPage() {
+        val toAddFragment = HomeFragmentDirections.actionHomeFragmentToAddStoryFragment()
+        findNavController().navigate(toAddFragment)
     }
 }
