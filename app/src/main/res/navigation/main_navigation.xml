@@ -67,5 +67,9 @@
         android:id="@+id/cameraFragment"
         android:name="com.lucifergotmad.storyapp.ui.camera.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" />
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_cameraFragment_to_addStoryFragment"
+            app:destination="@id/addStoryFragment" />
+    </fragment>
 </navigation>
