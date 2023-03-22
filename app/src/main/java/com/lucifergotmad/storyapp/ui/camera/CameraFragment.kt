@@ -1,9 +1,7 @@
 package com.lucifergotmad.storyapp.ui.camera
 
-import android.app.Application
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
