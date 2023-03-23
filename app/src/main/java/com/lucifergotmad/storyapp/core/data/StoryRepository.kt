@@ -1,17 +1,17 @@
 package com.lucifergotmad.storyapp.core.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.lucifergotmad.storyapp.core.data.remote.request.LoginUserRequest
 import com.lucifergotmad.storyapp.core.data.remote.request.RegisterUserRequest
 import com.lucifergotmad.storyapp.core.data.remote.response.PostLoginResponse
 import com.lucifergotmad.storyapp.core.data.remote.response.PostResponse
-import com.lucifergotmad.storyapp.core.data.remote.response.StoryResponse
 import com.lucifergotmad.storyapp.core.data.remote.retrofit.StoryService
 import com.lucifergotmad.storyapp.core.data.remote.retrofit.UserService
 import com.lucifergotmad.storyapp.core.domain.DetailStory
 import com.lucifergotmad.storyapp.core.domain.Story
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class StoryRepository(
     private val mStoryService: StoryService, private val mUserService: UserService
@@ -74,6 +74,24 @@ class StoryRepository(
             }
 
             emit(Result.Success(detailStory))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun addStory(
+        file: MultipartBody.Part,
+        description: RequestBody,
+        token: String
+    ): LiveData<Result<String>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = mStoryService.addStory(file, description, token)
+            if (response.error) {
+                emit(Result.Error(response.message))
+            }
+
+            emit(Result.Success(response.message))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
