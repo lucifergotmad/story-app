@@ -6,12 +6,18 @@ import androidx.lifecycle.asLiveData
 import com.lucifergotmad.storyapp.core.data.StoryRepository
 import com.lucifergotmad.storyapp.core.domain.Story
 import com.lucifergotmad.storyapp.core.domain.User
+import com.lucifergotmad.storyapp.core.preferences.SettingPreferences
 import com.lucifergotmad.storyapp.core.preferences.UserPreferences
 
 class HomeViewModel(
     private val storyRepository: StoryRepository,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    private val settingPreferences: SettingPreferences
 ) : ViewModel() {
+    fun getThemeSettings(): LiveData<Boolean> {
+        return settingPreferences.getThemeSetting().asLiveData()
+    }
+
     fun getUser(): LiveData<User> {
         return userPreferences.getUser().asLiveData()
     }

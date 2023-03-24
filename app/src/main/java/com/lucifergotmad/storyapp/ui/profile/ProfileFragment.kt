@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -39,11 +40,31 @@ class ProfileFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             viewModel.deleteUser()
         }
+
+        binding.switchTheme.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveThemeSetting(
+                isChecked
+            )
+        }
     }
 
     private fun setupViewModel() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext().dataStore)
         viewModel = ViewModelProvider(requireActivity(), factory)[ProfileViewModel::class.java]
+
+        viewModel.getThemeSettings().observe(
+            viewLifecycleOwner
+        ) { isDarkModeActive: Boolean ->
+            binding.apply {
+                if (isDarkModeActive) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    switchTheme.isChecked = true
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    switchTheme.isChecked = false
+                }
+            }
+        }
 
         viewModel.getUser().observe(viewLifecycleOwner) { result ->
             if (result.token.isEmpty()) {

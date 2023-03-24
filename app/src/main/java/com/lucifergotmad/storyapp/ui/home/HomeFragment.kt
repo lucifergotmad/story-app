@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.MenuProvider
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -83,6 +84,18 @@ class HomeFragment : Fragment() {
     private fun setupViewModel() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext().dataStore)
         viewModel = ViewModelProvider(requireActivity(), factory)[HomeViewModel::class.java]
+
+        viewModel.getThemeSettings().observe(
+            viewLifecycleOwner
+        ) { isDarkModeActive: Boolean ->
+            binding.apply {
+                if (isDarkModeActive) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+            }
+        }
 
         viewModel.getUser().observe(viewLifecycleOwner) { result ->
             if (result.token.isNotEmpty()) {

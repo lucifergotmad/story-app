@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.lucifergotmad.storyapp.core.data.StoryRepository
 import com.lucifergotmad.storyapp.core.data.remote.retrofit.ApiConfig
+import com.lucifergotmad.storyapp.core.preferences.SettingPreferences
 import com.lucifergotmad.storyapp.core.preferences.UserPreferences
 
 object Injection {
@@ -13,7 +14,11 @@ object Injection {
         return StoryRepository.getInstance(storyService, userService)
     }
 
-    fun providePreferences(dataStore: DataStore<Preferences>): UserPreferences {
+    fun provideUserPreferences(dataStore: DataStore<Preferences>): UserPreferences {
         return UserPreferences.getInstance(dataStore)
+    }
+
+    fun provideSettingPreferences(dataStore: DataStore<Preferences>): SettingPreferences {
+        return SettingPreferences.getInstance(dataStore)
     }
 }

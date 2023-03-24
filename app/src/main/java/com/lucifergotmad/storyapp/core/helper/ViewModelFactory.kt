@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.lucifergotmad.storyapp.core.data.StoryRepository
 import com.lucifergotmad.storyapp.core.di.Injection
+import com.lucifergotmad.storyapp.core.preferences.SettingPreferences
 import com.lucifergotmad.storyapp.core.preferences.UserPreferences
 import com.lucifergotmad.storyapp.ui.add.AddStoryViewModel
 import com.lucifergotmad.storyapp.ui.detail.DetailStoryViewModel
@@ -16,12 +17,13 @@ import com.lucifergotmad.storyapp.ui.register.RegisterViewModel
 
 class ViewModelFactory private constructor(
     private val storyRepository: StoryRepository,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    private val settingPreferences: SettingPreferences
 ) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(storyRepository, userPreferences) as T
+            return HomeViewModel(storyRepository, userPreferences, settingPreferences) as T
         } else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(storyRepository, userPreferences) as T
         } else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
@@ -31,7 +33,7 @@ class ViewModelFactory private constructor(
         } else if (modelClass.isAssignableFrom(AddStoryViewModel::class.java)) {
             return AddStoryViewModel(storyRepository, userPreferences) as T
         } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
-            return ProfileViewModel(userPreferences) as T
+            return ProfileViewModel(userPreferences, settingPreferences) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
@@ -46,7 +48,8 @@ class ViewModelFactory private constructor(
             instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(
                     Injection.provideRepository(),
-                    Injection.providePreferences(dataStore),
+                    Injection.provideUserPreferences(dataStore),
+                    Injection.provideSettingPreferences(dataStore)
                 )
             }.also { instance = it }
     }
