@@ -10,6 +10,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.lucifergotmad.storyapp.core.helper.ViewModelFactory
 import com.lucifergotmad.storyapp.databinding.FragmentProfileBinding
 
@@ -31,11 +32,26 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
+        setupView()
+    }
+
+    private fun setupView() {
+        binding.btnLogout.setOnClickListener {
+            viewModel.deleteUser()
+        }
     }
 
     private fun setupViewModel() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext().dataStore)
         viewModel = ViewModelProvider(requireActivity(), factory)[ProfileViewModel::class.java]
+
+        viewModel.getUser().observe(viewLifecycleOwner) { result ->
+            if (result.token.isEmpty()) {
+                val toLoginFragment =
+                    ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
+                findNavController().navigate(toLoginFragment)
+            }
+        }
     }
 
 }

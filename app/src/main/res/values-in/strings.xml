@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="title_register_page">Tidak memiliki akun?</string>
+    <string name="title_login_page">Sudah siap membagikan ceritamu?</string>
+    <string name="title_profile_menu">Profil</string>
+    <string name="subtitle_register_page">Daftar bersama kami sekarang</string>
+    <string name="subtitle_login_page">Masukan data diri terlebih dahulu</string>
+    <string name="description_register_image">3 orang sedang tersenyum</string>
+    <string name="description_login_image">Orang sedang berdiskusi</string>
+    <string name="description_move_to_add_button">Pindah ke halaman Tambah Cerita</string>
+    <string name="description_detail_image">Detail Gambar dari Cerita</string>
+    <string name="description_preview_image">Cuplikan Gambar</string>
+    <string name="description_capture_image">Tangkap Gambar</string>
+    <string name="description_switch_image">Ganti Kamera</string>
+    <string name="label_name">Nama</string>
+    <string name="hint_name_field">Masukan nama</string>
+    <string name="label_email">Email</string>
+    <string name="hint_email_field">Masukan email</string>
+    <string name="label_password">Sandi</string>
+    <string name="hint_password_field">Masukan sandi</string>
+    <string name="label_description">Deskripsi</string>
+    <string name="hint_description_field">Masukan deskripsi</string>
+    <string name="btn_register_text">Daftar</string>
+    <string name="btn_login_text">Masuk</string>
+    <string name="btn_gallery_text">Galeri</string>
+    <string name="btn_camera_text">Kamera</string>
+    <string name="btn_upload_text">Unggah</string>
+    <string name="btn_logout_text">Keluar</string>
+    <string name="tv_author_tools">Octyo Paswa Putra</string>
+    <string name="tv_description_tools">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper pretium est, et porta erat faucibus ac. Curabitur turpis ligula, ultricies eu sagittis eget, sagittis vitae nisl. In interdum, dolor in maximus porttitor, elit enim mollis nulla, a mollis dui metus ut tellus. In semper vehicula hendrerit. Integer mattis mattis risus, ac rutrum dui aliquam quis. Vivamus ante est, accumsan vitae eros non, imperdiet maximus metus. Cras pharetra erat turpis, in mattis nisi vehicula a. Mauris dapibus elit vitae risus suscipit, sit amet pretium sapien dignissim. Cras finibus ullamcorper dui. Suspendisse libero lorem, rhoncus consequat massa quis, vehicula molestie justo. Proin hendrerit a sem id pharetra.</string>
+    <string name="tv_created_at_tools">23 Jan 2022</string>
+    <string name="label_themes">Dark Mode</string>
+</resources>

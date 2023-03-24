@@ -9,6 +9,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_story"
+        tools:listitem="@layout/item_row_story"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

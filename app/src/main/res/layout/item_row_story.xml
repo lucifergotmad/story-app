@@ -18,7 +18,7 @@
             android:id="@+id/iv_item_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:contentDescription="@string/item_story_image"
+            android:contentDescription="@string/description_detail_image"
             android:scaleType="matrix"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_item_image"
-            tools:text="@string/tv_title_tools" />
+            tools:text="@string/tv_author_tools" />
 
         <TextView
             android:id="@+id/tv_description"

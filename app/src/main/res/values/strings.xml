@@ -2,6 +2,7 @@
     <string name="app_name">StoryApp</string>
     <string name="title_register_page">Didn\'t have an account?</string>
     <string name="title_login_page">Ready to share your Story?</string>
+    <string name="title_profile_menu">Profile</string>
     <string name="subtitle_register_page">Register with us now</string>
     <string name="subtitle_login_page">Enter your personal data first</string>
     <string name="description_register_image">3 People Smiling</string>
