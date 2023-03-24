@@ -12,11 +12,11 @@
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:contentDescription="@string/iv_login_description"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal2"
+        android:contentDescription="@string/description_login_image"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalTop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
+        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontalBottom"
         app:srcCompat="@drawable/image_login" />
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins_semi_bold"
-        android:text="@string/tv_header_login_description"
+        android:text="@string/title_login_page"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:fontFamily="@font/poppins_light"
-        android:text="@string/tv_subtitle_login_description"
+        android:text="@string/subtitle_login_page"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_title" />
 
@@ -49,7 +49,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/poppins_bold"
         android:labelFor="@id/edt_name_layout"
-        android:text="@string/email"
+        android:text="@string/label_email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sub_title" />
 
@@ -69,8 +69,8 @@
             android:id="@+id/edt_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/edt_email_hint" />
+            android:hint="@string/hint_email_field"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -81,7 +81,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins_bold"
         android:labelFor="@id/edt_password_layout"
-        android:text="@string/password"
+        android:text="@string/label_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_email_layout" />
 
@@ -102,7 +102,7 @@
             android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edt_password_hint"
+            android:hint="@string/hint_password_field"
             android:inputType="textPassword"
             app:passwordToggleEnabled="true" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +114,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/btn_login"
+        android:text="@string/btn_login_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_password_layout" />
@@ -126,13 +126,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/register"
+        android:text="@string/btn_register_text"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHorizontal"
+        android:id="@+id/guidelineHorizontalBottom"
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:orientation="horizontal"
@@ -141,7 +141,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHorizontal2"
+        android:id="@+id/guidelineHorizontalTop"
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:orientation="horizontal"

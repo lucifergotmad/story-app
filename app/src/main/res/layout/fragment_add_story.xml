@@ -12,15 +12,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        android:contentDescription="@string/image_preview"
-        app:layout_constraintBottom_toBottomOf="@id/guideline"
+        android:contentDescription="@string/description_preview_image"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_placeholder" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/guidelineBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -32,9 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/choose_from_gallery"
+        android:text="@string/btn_gallery_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline" />
+        app:layout_constraintTop_toTopOf="@id/guidelineBottom" />
 
     <Button
         android:id="@+id/btn_camera"
@@ -42,9 +42,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/camera"
+        android:text="@string/btn_camera_text"
         app:layout_constraintEnd_toStartOf="@id/btn_gallery"
-        app:layout_constraintTop_toTopOf="@id/guideline" />
+        app:layout_constraintTop_toTopOf="@id/guidelineBottom" />
 
     <TextView
         android:id="@+id/tv_description"
@@ -54,7 +54,7 @@
         android:fontFamily="@font/poppins_bold"
         android:gravity="bottom"
         android:labelFor="@id/edt_name_layout"
-        android:text="@string/description"
+        android:text="@string/label_description"
         app:layout_constraintBottom_toBottomOf="@+id/btn_camera"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_camera" />
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="start"
-            android:hint="@string/edt_description_hint"
+            android:hint="@string/hint_description_field"
             android:inputType="textMultiLine|textLongMessage" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="32dp"
-        android:text="@string/upload"
+        android:text="@string/btn_upload_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
