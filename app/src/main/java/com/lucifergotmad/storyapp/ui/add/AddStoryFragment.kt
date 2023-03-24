@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +27,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lucifergotmad.storyapp.R
 import com.lucifergotmad.storyapp.core.helper.ViewModelFactory
-import com.lucifergotmad.storyapp.core.helper.reduceFileImage
 import com.lucifergotmad.storyapp.core.helper.rotateBitmap
 import com.lucifergotmad.storyapp.core.helper.uriToFile
 import com.lucifergotmad.storyapp.databinding.FragmentAddStoryBinding
@@ -104,20 +102,17 @@ class AddStoryFragment : Fragment() {
             )
             binding.previewImageView.setImageBitmap(result)
         }
-
     }
 
     private fun uploadImage() {
         if (getFile != null && binding.edtDescription.text?.isNotEmpty() == true) {
-            val file = reduceFileImage(getFile as File)
+            val file = getFile as File
             val description =
                 binding.edtDescription.text.toString().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "photo", file.name, requestImageFile
             )
-
-            Log.d("AddStoryFragment", "accessToken: $accessToken")
 
             viewModel.addStory(imageMultipart, description, "Bearer $accessToken")
                 .observe(viewLifecycleOwner) { result ->
