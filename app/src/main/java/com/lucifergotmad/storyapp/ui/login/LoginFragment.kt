@@ -1,9 +1,10 @@
 package com.lucifergotmad.storyapp.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,7 @@ import kotlinx.coroutines.*
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var viewModel: LoginViewModel
 
@@ -39,6 +40,88 @@ class LoginFragment : Fragment() {
 
         setupViewModel()
         setupView()
+        setupAction()
+        setupAnimation()
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.btn_login -> {
+                binding.apply {
+                    if (edtEmail.text?.isNotEmpty() == true && edtPassword.text?.isNotEmpty() == true) {
+                        val user = LoginUserRequest(
+                            binding.edtEmail.text.toString(),
+                            binding.edtPassword.text.toString()
+                        )
+
+                        viewModel.loginUser(user).observe(viewLifecycleOwner) { result ->
+                            if (result != null) {
+                                when (result) {
+                                    is com.lucifergotmad.storyapp.core.data.Result.Loading -> {
+                                        v.isEnabled = false
+                                    }
+                                    is com.lucifergotmad.storyapp.core.data.Result.Success -> {
+                                        v.isEnabled = true
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            val response = result.data.loginResult
+                                            val dataUser = User(
+                                                response?.userId ?: "",
+                                                response?.name ?: "",
+                                                response?.token ?: "",
+                                            )
+
+                                            viewModel.saveUser(dataUser).join()
+
+                                            withContext(Dispatchers.Main) {
+                                                Toast.makeText(
+                                                    context,
+                                                    "Yeay! ${result.data.message}",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                moveToHomePage()
+                                            }
+                                        }
+                                    }
+                                    is com.lucifergotmad.storyapp.core.data.Result.Error -> {
+                                        v.isEnabled = true
+                                        Toast.makeText(
+                                            context,
+                                            "Somethings wrong! " + result.error,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if (edtEmail.text?.isEmpty() == true) {
+                            edtEmail.error = getString(R.string.error_required_message, "Email")
+                        }
+
+                        if (edtPassword.text?.isEmpty() == true) {
+                            edtPassword.error =
+                                getString(R.string.error_required_message, "Password")
+                            edtPassword.setCompoundDrawablesWithIntrinsicBounds(
+                                null,
+                                null,
+                                null,
+                                null
+                            )
+                        }
+                    }
+                }
+            }
+            R.id.btn_move_to_register -> {
+                val toRegisterFragment =
+                    LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+                findNavController().navigate(toRegisterFragment)
+            }
+        }
+    }
+
+    private fun setupAction() {
+        binding.btnMoveToRegister.setOnClickListener(this)
+        binding.btnLogin.setOnClickListener(this)
     }
 
     private fun setupView() {
@@ -57,72 +140,6 @@ class LoginFragment : Fragment() {
 
         }
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
-
-
-        binding.btnMoveToRegister.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-        }
-
-        binding.btnLogin.setOnClickListener {
-            binding.apply {
-                if (edtEmail.text?.isNotEmpty() == true && edtPassword.text?.isNotEmpty() == true) {
-                    val user = LoginUserRequest(
-                        binding.edtEmail.text.toString(),
-                        binding.edtPassword.text.toString()
-                    )
-
-                    viewModel.loginUser(user).observe(viewLifecycleOwner) { result ->
-                        if (result != null) {
-                            when (result) {
-                                is com.lucifergotmad.storyapp.core.data.Result.Loading -> {
-                                    it.isEnabled = false
-                                }
-                                is com.lucifergotmad.storyapp.core.data.Result.Success -> {
-                                    it.isEnabled = true
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        val response = result.data.loginResult
-                                        val dataUser = User(
-                                            response?.userId ?: "",
-                                            response?.name ?: "",
-                                            response?.token ?: "",
-                                        )
-                                        Log.d("LoginFragment", "user: $dataUser")
-                                        viewModel.saveUser(dataUser).join()
-
-                                        withContext(Dispatchers.Main) {
-                                            Toast.makeText(
-                                                context,
-                                                "Yeay! ${result.data.message}",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            Log.d("LoginFragment", "user: ${dataUser.token}")
-                                            moveToHomePage()
-                                        }
-                                    }
-                                }
-                                is com.lucifergotmad.storyapp.core.data.Result.Error -> {
-                                    it.isEnabled = true
-                                    Toast.makeText(
-                                        context,
-                                        "Somethings wrong! " + result.error,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    if (edtEmail.text?.isEmpty() == true) {
-                        edtEmail.error = "Email is required"
-                    }
-
-                    if (edtPassword.text?.isEmpty() == true) {
-                        edtPassword.error = "Password is Required"
-                        edtPassword.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
-                    }
-                }
-            }
-        }
     }
 
     private fun setupViewModel() {
@@ -133,5 +150,43 @@ class LoginFragment : Fragment() {
     private fun moveToHomePage() {
         val toHomePage = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
         findNavController().navigate(toHomePage)
+    }
+
+    private fun setupAnimation() {
+        binding.apply {
+            ObjectAnimator.ofFloat(imageView, View.TRANSLATION_X, -30f, 30f).apply {
+                duration = 6000
+                repeatCount = ObjectAnimator.INFINITE
+                repeatMode = ObjectAnimator.REVERSE
+            }.start()
+
+            val title = ObjectAnimator.ofFloat(headerTitle, View.ALPHA, 1f).setDuration(500)
+            val subTitle = ObjectAnimator.ofFloat(subTitle, View.ALPHA, 1f).setDuration(500)
+            val emailTextView = ObjectAnimator.ofFloat(tvEmail, View.ALPHA, 1f).setDuration(500)
+            val emailEditTextLayout =
+                ObjectAnimator.ofFloat(edtEmailLayout, View.ALPHA, 1f).setDuration(500)
+            val passwordTextView =
+                ObjectAnimator.ofFloat(tvPassword, View.ALPHA, 1f).setDuration(500)
+            val passwordEditTextLayout =
+                ObjectAnimator.ofFloat(edtPasswordLayout, View.ALPHA, 1f).setDuration(500)
+            val login = ObjectAnimator.ofFloat(btnLogin, View.ALPHA, 1f).setDuration(500)
+            val moveToRegister =
+                ObjectAnimator.ofFloat(btnMoveToRegister, View.ALPHA, 1f).setDuration(500)
+
+            AnimatorSet().apply {
+                playSequentially(
+                    title,
+                    subTitle,
+                    emailTextView,
+                    emailEditTextLayout,
+                    passwordTextView,
+                    passwordEditTextLayout,
+                    login,
+                    moveToRegister
+                )
+                startDelay = 500
+            }.start()
+        }
+
     }
 }
