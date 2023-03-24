@@ -11,6 +11,7 @@ import com.lucifergotmad.storyapp.ui.add.AddStoryViewModel
 import com.lucifergotmad.storyapp.ui.detail.DetailStoryViewModel
 import com.lucifergotmad.storyapp.ui.home.HomeViewModel
 import com.lucifergotmad.storyapp.ui.login.LoginViewModel
+import com.lucifergotmad.storyapp.ui.profile.ProfileViewModel
 import com.lucifergotmad.storyapp.ui.register.RegisterViewModel
 
 class ViewModelFactory private constructor(
@@ -29,6 +30,8 @@ class ViewModelFactory private constructor(
             return DetailStoryViewModel(storyRepository, userPreferences) as T
         } else if (modelClass.isAssignableFrom(AddStoryViewModel::class.java)) {
             return AddStoryViewModel(storyRepository, userPreferences) as T
+        } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(userPreferences) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
