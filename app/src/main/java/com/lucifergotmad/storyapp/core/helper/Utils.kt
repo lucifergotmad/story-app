@@ -37,7 +37,7 @@ fun createFile(application: Application): File {
     return File(outputDirectory, "$timeStamp.jpg")
 }
 
-fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = true): Bitmap {
+fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {
     val matrix = Matrix()
     return if (isBackCamera) {
         matrix.postRotate(90f)
@@ -81,7 +81,7 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
 }
 
 fun reduceFileImage(file: File): File {
-    val bitmap = BitmapFactory.decodeFile(file.path)
+    val bitmap = rotateBitmap(BitmapFactory.decodeFile(file.path))
 
     var compressQuality = 100
     var streamLength: Int

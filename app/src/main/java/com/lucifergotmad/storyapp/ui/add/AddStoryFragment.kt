@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lucifergotmad.storyapp.R
 import com.lucifergotmad.storyapp.core.helper.ViewModelFactory
+import com.lucifergotmad.storyapp.core.helper.reduceFileImage
 import com.lucifergotmad.storyapp.core.helper.rotateBitmap
 import com.lucifergotmad.storyapp.core.helper.uriToFile
 import com.lucifergotmad.storyapp.databinding.FragmentAddStoryBinding
@@ -106,7 +107,7 @@ class AddStoryFragment : Fragment() {
 
     private fun uploadImage() {
         if (getFile != null && binding.edtDescription.text?.isNotEmpty() == true) {
-            val file = getFile as File
+            val file = reduceFileImage(getFile as File)
             val description =
                 binding.edtDescription.text.toString().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
