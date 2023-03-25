@@ -45,7 +45,7 @@ class AddStoryFragment : Fragment() {
     private lateinit var viewModel: AddStoryViewModel
     private lateinit var accessToken: String
     private var getFile: File? = null
-    private var isBckCamera: Boolean = true
+    private var isBackCamera: Boolean? = null
 
     companion object {
         const val CAMERA_X_REQUEST_KEY = "CAMERA_X_REQUEST_KEY"
@@ -94,12 +94,14 @@ class AddStoryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener(CAMERA_X_REQUEST_KEY) { _, bundle ->
-            this.isBckCamera = bundle.getBoolean("isBackCamera", true)
+            val isBackCameraBundle = bundle.getBoolean("isBackCamera", true)
             val myFile = bundle.getSerializable("picture") as File
 
             getFile = myFile
+            isBackCamera = isBackCameraBundle
+
             val result = rotateBitmap(
-                BitmapFactory.decodeFile(myFile.path), this.isBckCamera
+                BitmapFactory.decodeFile(myFile.path), isBackCameraBundle
             )
             binding.previewImageView.setImageBitmap(result)
         }
@@ -107,7 +109,7 @@ class AddStoryFragment : Fragment() {
 
     private fun uploadImage() {
         if (getFile != null && binding.edtDescription.text?.isNotEmpty() == true) {
-            val file = reduceFileImage(getFile as File, this.isBckCamera)
+            val file = reduceFileImage(getFile as File, this.isBackCamera)
             val description =
                 binding.edtDescription.text.toString().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())

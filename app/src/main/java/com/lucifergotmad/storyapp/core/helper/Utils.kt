@@ -37,32 +37,37 @@ fun createFile(application: Application): File {
     return File(outputDirectory, "$timeStamp.jpg")
 }
 
-fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {
-    val matrix = Matrix()
-    return if (isBackCamera) {
-        matrix.postRotate(90f)
-        Bitmap.createBitmap(
-            bitmap,
-            0,
-            0,
-            bitmap.width,
-            bitmap.height,
-            matrix,
-            true
-        )
+fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean?): Bitmap {
+    if (isBackCamera == null) {
+        return bitmap
     } else {
-        matrix.postRotate(-90f)
-        matrix.postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)
-        Bitmap.createBitmap(
-            bitmap,
-            0,
-            0,
-            bitmap.width,
-            bitmap.height,
-            matrix,
-            true
-        )
+        val matrix = Matrix()
+        return if (isBackCamera) {
+            matrix.postRotate(90f)
+            Bitmap.createBitmap(
+                bitmap,
+                0,
+                0,
+                bitmap.width,
+                bitmap.height,
+                matrix,
+                true
+            )
+        } else {
+            matrix.postRotate(-90f)
+            matrix.postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)
+            Bitmap.createBitmap(
+                bitmap,
+                0,
+                0,
+                bitmap.width,
+                bitmap.height,
+                matrix,
+                true
+            )
+        }
     }
+
 }
 
 fun uriToFile(selectedImg: Uri, context: Context): File {
@@ -80,8 +85,15 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
     return myFile
 }
 
-fun reduceFileImage(file: File, isBackCamera: Boolean): File {
-    val bitmap = rotateBitmap(BitmapFactory.decodeFile(file.path), isBackCamera)
+fun reduceFileImage(file: File, isBackCamera: Boolean?): File {
+    val bitmap = if (isBackCamera != null) {
+        rotateBitmap(
+            BitmapFactory.decodeFile(file.path),
+            isBackCamera
+        )
+    } else {
+        rotateBitmap(BitmapFactory.decodeFile(file.path), null)
+    }
 
     var compressQuality = 100
     var streamLength: Int
