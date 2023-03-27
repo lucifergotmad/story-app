@@ -96,7 +96,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                                 null,
                                 null,
                                 null
-                            );
+                            )
                         }
                     }
                 }
@@ -127,10 +127,8 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                     WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             }
         } else {
-            window.decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            )
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         }
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
     }

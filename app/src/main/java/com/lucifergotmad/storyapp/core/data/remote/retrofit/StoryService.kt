@@ -25,7 +25,7 @@ interface StoryService {
     @GET("stories")
     suspend fun getALlStories(
         @Header("Authorization") authToken: String,
-        @Query("location") location: String?
+        @Query("location") location: Int?
     ): StoryResponse
 
     @GET("stories/{id}")

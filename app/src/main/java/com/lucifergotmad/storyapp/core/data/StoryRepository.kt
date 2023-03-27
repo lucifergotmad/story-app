@@ -1,5 +1,6 @@
 package com.lucifergotmad.storyapp.core.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.lucifergotmad.storyapp.core.data.remote.request.LoginUserRequest
@@ -43,7 +44,7 @@ class StoryRepository(
         }
     }
 
-    fun getStories(token: String, location: String?): LiveData<Result<List<Story>>> = liveData {
+    fun getStories(token: String, location: Int?): LiveData<Result<List<Story>>> = liveData {
         emit(Result.Loading)
         try {
             val response = mStoryService.getALlStories(token, location)
@@ -52,7 +53,7 @@ class StoryRepository(
             }
 
             val listStories = response.listStory.map {
-                Story(it.id, it.name, it.description, it.photoUrl)
+                Story(it.id, it.name, it.description, it.photoUrl, it.lat, it.lon)
             }
 
             emit(Result.Success(listStories))

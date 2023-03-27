@@ -36,7 +36,7 @@ class ViewModelFactory private constructor(
         } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             return ProfileViewModel(userPreferences, settingPreferences) as T
         } else if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
-            return MapsViewModel(storyRepository) as T
+            return MapsViewModel(storyRepository, userPreferences) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
