@@ -59,6 +59,12 @@ class HomeFragment : Fragment() {
                         findNavController().navigate(toProfileFragment)
                         true
                     }
+                    R.id.maps_menu -> {
+                        val toMapsFragment =
+                            HomeFragmentDirections.actionHomeFragmentToMapsFragment()
+                        findNavController().navigate(toMapsFragment)
+                        true
+                    }
                     else -> false
                 }
             }
@@ -124,7 +130,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupStories(token: String) {
-        viewModel.getStories("Bearer $token").observe(viewLifecycleOwner) { result ->
+        viewModel.getStories("Bearer $token", null).observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when (result) {
                     is com.lucifergotmad.storyapp.core.data.Result.Loading -> {

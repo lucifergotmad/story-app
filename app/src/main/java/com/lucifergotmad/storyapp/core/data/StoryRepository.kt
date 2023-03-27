@@ -43,10 +43,10 @@ class StoryRepository(
         }
     }
 
-    fun getStories(token: String): LiveData<Result<List<Story>>> = liveData {
+    fun getStories(token: String, location: String?): LiveData<Result<List<Story>>> = liveData {
         emit(Result.Loading)
         try {
-            val response = mStoryService.getALlStories(token)
+            val response = mStoryService.getALlStories(token, location)
             if (response.error == true) {
                 emit(Result.Error(response.message ?: ""))
             }

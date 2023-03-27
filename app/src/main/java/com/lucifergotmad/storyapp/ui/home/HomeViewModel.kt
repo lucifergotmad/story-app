@@ -22,5 +22,5 @@ class HomeViewModel(
         return userPreferences.getUser().asLiveData()
     }
 
-    fun getStories(token: String) = storyRepository.getStories(token)
+    fun getStories(token: String) = storyRepository.getStories(token, null)
 }

@@ -11,6 +11,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface StoryService {
     @Multipart
@@ -22,7 +23,10 @@ interface StoryService {
     ): PostResponse
 
     @GET("stories")
-    suspend fun getALlStories(@Header("Authorization") authToken: String): StoryResponse
+    suspend fun getALlStories(
+        @Header("Authorization") authToken: String,
+        @Query("location") location: String?
+    ): StoryResponse
 
     @GET("stories/{id}")
     suspend fun getDetailStory(

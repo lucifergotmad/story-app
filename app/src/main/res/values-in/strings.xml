@@ -4,6 +4,7 @@
     <string name="title_register_page">Tidak memiliki akun?</string>
     <string name="title_login_page">Sudah siap membagikan ceritamu?</string>
     <string name="title_profile_menu">Profil</string>
+    <string name="title_story_location_menu">Lokasi Cerita</string>
     <string name="subtitle_register_page">Daftar bersama kami sekarang</string>
     <string name="subtitle_login_page">Masukan data diri terlebih dahulu</string>
     <string name="description_register_image">3 orang sedang tersenyum</string>
