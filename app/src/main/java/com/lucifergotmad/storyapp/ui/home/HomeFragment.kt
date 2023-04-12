@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lucifergotmad.storyapp.R
 import com.lucifergotmad.storyapp.core.adapter.ListStoryAdapter
+import com.lucifergotmad.storyapp.core.adapter.LoadingStateAdapter
 import com.lucifergotmad.storyapp.core.helper.ViewModelFactory
 import com.lucifergotmad.storyapp.databinding.FragmentHomeBinding
 
@@ -83,7 +84,11 @@ class HomeFragment : Fragment() {
         binding.listStory.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            adapter = listStoryAdapter
+            adapter = listStoryAdapter.withLoadStateFooter(
+                footer = LoadingStateAdapter {
+                    listStoryAdapter.retry()
+                }
+            )
         }
     }
 

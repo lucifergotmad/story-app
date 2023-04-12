@@ -33,4 +33,5 @@
     <string name="tv_created_at_tools">23 Jan 2022</string>
     <string name="label_themes">Dark Mode</string>
     <string name="error_required_message">%1$s tidak boleh kosong</string>
+    <string name="retry">Coba Lagi</string>
 </resources>
