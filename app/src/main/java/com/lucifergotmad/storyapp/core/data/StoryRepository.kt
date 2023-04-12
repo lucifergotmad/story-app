@@ -1,8 +1,11 @@
 package com.lucifergotmad.storyapp.core.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.lucifergotmad.storyapp.core.data.remote.request.LoginUserRequest
 import com.lucifergotmad.storyapp.core.data.remote.request.RegisterUserRequest
 import com.lucifergotmad.storyapp.core.data.remote.response.PostLoginResponse
@@ -62,6 +65,15 @@ class StoryRepository(
         }
     }
 
+    fun getStoriesPaging(token: String): LiveData<PagingData<Story>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = { StoryPagingSource(mStoryService, token) }
+        ).liveData
+
+
     fun getStoryDetail(id: String, token: String): LiveData<Result<DetailStory>> = liveData {
         emit(Result.Loading)
         try {
@@ -103,7 +115,6 @@ class StoryRepository(
         @Volatile
         private var instance: StoryRepository? = null
 
-        private const val TAG = "StoryRepository"
         fun getInstance(
             storyService: StoryService, userService: UserService
         ): StoryRepository = instance ?: synchronized(this) {
