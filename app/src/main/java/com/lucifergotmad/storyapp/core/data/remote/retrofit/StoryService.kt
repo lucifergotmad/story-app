@@ -28,6 +28,13 @@ interface StoryService {
         @Query("location") location: Int?
     ): StoryResponse
 
+    @GET("stories")
+    suspend fun getStoriesPaging(
+        @Header("Authorization") authToken: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): StoryResponse
+
     @GET("stories/{id}")
     suspend fun getDetailStory(
         @Path("id") id: String,

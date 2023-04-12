@@ -2,6 +2,7 @@ package com.lucifergotmad.storyapp.core.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.lucifergotmad.storyapp.core.domain.Story
 import com.lucifergotmad.storyapp.databinding.ItemRowStoryBinding
 
-class ListStoryAdapter : ListAdapter<Story, ListStoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
+class ListStoryAdapter : PagingDataAdapter<Story, ListStoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -40,9 +41,13 @@ class ListStoryAdapter : ListAdapter<Story, ListStoryAdapter.ListViewHolder>(DIF
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val story = getItem(position)
-        holder.bind(story)
+        if (story != null) {
+            holder.bind(story)
+        }
         holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(story.id)
+            if (story != null) {
+                onItemClickCallback.onItemClicked(story.id)
+            }
         }
     }
 

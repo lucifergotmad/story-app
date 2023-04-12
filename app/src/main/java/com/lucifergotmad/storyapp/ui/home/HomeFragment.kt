@@ -3,8 +3,8 @@ package com.lucifergotmad.storyapp.ui.home
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -130,25 +130,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupStories(token: String) {
-        viewModel.getStories("Bearer $token").observe(viewLifecycleOwner) { result ->
+        viewModel.getStoriesPaging("Bearer $token").observe(viewLifecycleOwner) { result ->
+            Log.d("HomeFragment", result.toString())
             if (result != null) {
-                when (result) {
-                    is com.lucifergotmad.storyapp.core.data.Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
-                    is com.lucifergotmad.storyapp.core.data.Result.Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        val listStories = result.data
-
-                        listStoryAdapter.submitList(listStories)
-                    }
-                    is com.lucifergotmad.storyapp.core.data.Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        Toast.makeText(
-                            context, "Somethings wrong! " + result.error, Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
+                listStoryAdapter.submitData(lifecycle, result)
             }
         }
     }
