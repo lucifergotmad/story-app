@@ -146,9 +146,11 @@ class MapsFragment : Fragment() {
                                     context, "Loading...", Toast.LENGTH_SHORT
                                 ).show()
                             }
+
                             is com.lucifergotmad.storyapp.core.data.Result.Success -> {
                                 addManyMarker(result.data)
                             }
+
                             is com.lucifergotmad.storyapp.core.data.Result.Error -> {
                                 Toast.makeText(
                                     context, "Somethings wrong! " + result.error, Toast.LENGTH_SHORT
@@ -180,7 +182,7 @@ class MapsFragment : Fragment() {
                 bounds,
                 resources.displayMetrics.widthPixels,
                 resources.displayMetrics.heightPixels,
-                15
+                30
             ),
         )
     }

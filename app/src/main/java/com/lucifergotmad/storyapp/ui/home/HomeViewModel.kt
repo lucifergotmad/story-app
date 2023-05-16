@@ -23,7 +23,5 @@ class HomeViewModel(
         return userPreferences.getUser().asLiveData()
     }
 
-    fun getStories(token: String) = storyRepository.getStories(token, null)
-
     fun getStoriesPaging(token: String) = storyRepository.getStoriesPaging(token).cachedIn(viewModelScope)
 }
